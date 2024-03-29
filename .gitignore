@@ -38,3 +38,5 @@
 build/
 .vscode/
 test_*/
+model/
+*.Identifier
