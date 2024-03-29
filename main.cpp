@@ -5,7 +5,7 @@ int main(int argc, char **argv)
 {
     if (argc != 2)
     {
-        std::cout << "usage: PedroSwissTiming <image path>" << std::endl;
+        std::cout << "usage: PedroSwissTiming <video path>" << std::endl;
         return -1;
     }
 
@@ -17,6 +17,9 @@ int main(int argc, char **argv)
 
     double fps = cap.get(cv::CAP_PROP_FPS); // Get the framerate of the video
     int delay = 1000 / fps; // Calculate delay based on the framerate
+
+    // Load pre-trained SSD model
+    cv::dnn::Net net = cv::dnn::readNetFromTensorflow("model/frozen_inference_graph.pb");
 
     while (true){
         cv::Mat frame{};
