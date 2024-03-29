@@ -9,18 +9,31 @@ int main(int argc, char **argv)
         return -1;
     }
 
-    cv::Mat image;
-    image = cv::imread(argv[1], cv::IMREAD_COLOR);
-
-    if (!image.data)
-    {
-        std::cout << "No image data" << std::endl;
+    cv::VideoCapture cap{argv[1]};
+    if (!cap.isOpened()) {
+        std::cout << "Error opening video stream or file" << std::endl;
         return -1;
     }
-    cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE);
-    imshow("Display Image", image);
 
-    cv::waitKey(0);
+    double fps = cap.get(cv::CAP_PROP_FPS); // Get the framerate of the video
+    int delay = 1000 / fps; // Calculate delay based on the framerate
 
-    return 0;
+    while (true){
+        cv::Mat frame{};
+        if(!cap.read(frame)){
+            std::cout << "No more frames grabbed. Exiting..." << std::endl;
+            break;
+        }
+
+        cv::Mat gray{};
+        cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
+        cv::imshow("frame", gray);
+
+        if (cv::waitKey(delay) == 'q') {
+            break;
+        }
+    }
+
+    cap.release();
+    cv::destroyAllWindows();
 }
