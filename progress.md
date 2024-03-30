@@ -1,0 +1,42 @@
+# My progress:
+
+## Friday, 29th of March
+
+I figured that there are 3 strategies to perform object detection:
+
+My attempt at the Swiss Timing exercise
+
+3 strategies used for object detection:
+
+- deep learning object detection model
+- Haar Cascade classifier
+- Histogram of Oriented Gradients
+
+Was using libopencv-dev but that was version 4.5
+Compiled from source and I am now using 4.9.0
+
+## Saturday, 30th of March
+
+I don't want to train my own models so I searched for some pre-trained ones.
+I was able to find some but very little information on scale, mean subtraction and channels order for those pretrained models
+    models to use:  https://github.com/opencv/opencv/wiki/TensorFlow-Object-Detection-API
+    some page with info I found: https://github.com/LUOBO123LUOBO123/Mobilenet-ssd-v2/tree/master/dnn
+
+TensorFlow models from Kaggle are not really possible to use?
+I have the .pb but it seems I need to freeze the models?
+Also, no .pbtxt files for those
+They didn't work out the box
+
+I hear about something called cppflow to try to use TensorFlow withing C++ but scrapped it
+
+Also, the following models seem to work with no hiccups:
+
+// Load pre-trained SSD model
+    
+//WORKED
+//cv::dnn::Net net = cv::dnn::readNetFromTensorflow("model/Faster-RCNNInceptionV2/frozen_inference_graph.pb", "model/Faster-RCNNInceptionV2/config.pbtxt");
+//cv::dnn::Net net = cv::dnn::readNetFromTensorflow("model/MobileNet-SSDv1/frozen_inference_graph.pb", "model/MobileNet-SSDv1/config.pbtxt");
+//cv::dnn::Net net = cv::dnn::readNetFromTensorflow("model/MobileNet-SSDv2/frozen_inference_graph.pb", "model/MobileNet-SSDv2/config.pbtxt");
+//cv::dnn::Net net = cv::dnn::readNetFromTensorflow("model/MobileNet-SSDv3/frozen_inference_graph.pb");
+//cv::dnn::Net net = cv::dnn::readNetFromTensorflow("model/MobileNet-SSDv3/frozen_inference_graph.pb", "model/MobileNet-SSDv3/config.pbtxt");
+
