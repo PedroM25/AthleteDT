@@ -7,5 +7,3 @@ include_directories( ${OpenCV_INCLUDE_DIRS} )
 add_executable(PedroSwissTiming main.cpp)
 
 target_link_libraries( PedroSwissTiming ${OpenCV_LIBS} )
-
-
