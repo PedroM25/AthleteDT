@@ -15,6 +15,8 @@ My attempt at the Swiss Timing exercise
 Was using libopencv-dev but that was version 4.5
 Compiled from source and I am now using 4.9.0
 
+One of the main problems was getting OpenCV working in the first place but that is solved
+
 ## Saturday, 30th of March
 
 I don't want to train my own models so I searched for some pre-trained ones.
@@ -39,4 +41,8 @@ Also, the following models seem to work with no hiccups:
 //cv::dnn::Net net = cv::dnn::readNetFromTensorflow("model/MobileNet-SSDv2/frozen_inference_graph.pb", "model/MobileNet-SSDv2/config.pbtxt");
 //cv::dnn::Net net = cv::dnn::readNetFromTensorflow("model/MobileNet-SSDv3/frozen_inference_graph.pb");
 //cv::dnn::Net net = cv::dnn::readNetFromTensorflow("model/MobileNet-SSDv3/frozen_inference_graph.pb", "model/MobileNet-SSDv3/config.pbtxt");
+//cv::dnn::Net net = cv::dnn::readNetFromCaffe("model/MobileNet-SSDCaffe/MobileNetSSD_deploy.prototxt",
+                "model/MobileNet-SSDCaffe/MobileNetSSD_deploy.caffemodel");
 
+
+Ok I now realize that I just need to detect the athlete in the first frame and THEN apply a tracking algorithm to the rest of video, based on the box of the first detection
