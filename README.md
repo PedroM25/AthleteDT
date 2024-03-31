@@ -63,17 +63,19 @@ I would also explore other pretrained models and dedicate some time to understan
 * Build using cmake
 * Execute PedroAthleteDT binary with relative path of video to be analyzed as argument
 
-Let's see the following example:
+## Showcase
 
-`PedroAthleteDT test_video/fencing1.mp4`
+Executing,
+`PedroAthleteDT input_video/fencing1.mp4`
 
 Video produced:
-[output.avi](https://github.com/PedroM25/SwissTimingExercise/raw/8e9e38e55cde08d0e59fe8d651d2c06fa36dae6c/output_01-04-2024_00-20-21.avi)
+[output.mov](https://github.com/PedroM25/SwissTimingExercise/assets/40021588/69522110-55dc-4976-ba3a-715243a7e1fc)
+
 
 Log produced:
-```json
+```log
 Starting PedroAthleteDT execution.
-Successfully imported video. Video path: test_video/fencing1.mp4, FPS: 30, Resolution: 1280x720
+Successfully imported video. Video path: input_video/fencing1.mp4, FPS: 30, Resolution: 1280x720
 FRAME 1: Person detected, confidence: 0.998385, coordinates: [[897,136],[1245,136],[897,523],[1245,523]]
 FRAME 1: Target tracked: [[898,137],[1246,137],[898,524],[1246,524]]
 FRAME 2: Target tracked: [[899,136],[1247,136],[899,523],[1247,523]]
