@@ -43,18 +43,51 @@ I tried to use DaSiamRPN but realized I needed to pass in some parameters and on
 ## Features requested
 The following are the features requested and the progress of implementation of each:
 
-|Feature|Progress|
-|---|---|
-|Choose a sports clip (3-10 seconds)|Tried solution with three different sports clips depicting: fencing, skiing, figure skating|
-|Load and process all images|Solution processes video, frame by frame|
-|Suitable representation of the tracking results shall be visible in the output |Bounding box|
-|Further information can be extracted from the video and displayed (e.g. segmentation, skeleton recognition, ...)|Not performed|
-|Information should be available in text format|.log file created after each run|
-|Visualized output should be available for playback after processing|.avi file with H.264 codec exported after each run|
-|Display output during processing|Yes|
+|Feature|Progress|Info|
+|---|---|---|
+|Choose a sports clip (3-10 seconds)|✅|Tried solution with three different sports clips depicting fencing, skiing, figure skating|
+|Load and process all images|✅|
+|Suitable representation of the tracking results shall be visible in the output |✅|Bounding box|
+|Further information can be extracted from the video and displayed (e.g. segmentation, skeleton recognition, ...)|❌|
+|Information should be available in text format|✅|.log file created after each run|
+|Visualized output should be available for playback after processing|✅|.avi file with H.264 codec exported after each run|
+|Display output during processing|✅|
 
 
 ## Future work
 Since the clips are short, this solution works fine as it is but tracking of objects for long periods of time can lead to loss of tracking of the original object. To mitigate this, I would perform ocasional object detection and ensure that the program keeps tracking the desired object (the athlete).
 
 I would also explore other pretrained models and dedicate some time to understand what is out there and the different approaches (SSD, Faster R-CNN, YOLO and others)
+
+## Usage
+* Build using cmake
+* Execute PedroAthleteDT binary with relative path of video to be analyzed as argument
+
+Let's see the following example:
+
+`PedroAthleteDT test_video/fencing1.mp4`
+
+Video produced:
+[video](output_01-04-2024_00-20-21.avi)
+
+Log produced:
+```json
+Starting PedroAthleteDT execution.
+Successfully imported video. Video path: test_video/fencing1.mp4, FPS: 30, Resolution: 1280x720
+FRAME 1: Person detected, confidence: 0.998385, coordinates: [[897,136],[1245,136],[897,523],[1245,523]]
+FRAME 1: Target tracked: [[898,137],[1246,137],[898,524],[1246,524]]
+FRAME 2: Target tracked: [[899,136],[1247,136],[899,523],[1247,523]]
+FRAME 3: Target tracked: [[911,135],[1259,135],[911,522],[1259,522]]
+FRAME 4: Target tracked: [[923,133],[1271,133],[923,520],[1271,520]]
+... snip ...
+FRAME 275: Target tracked: [[730,175],[994,175],[730,468],[994,468]]
+FRAME 276: Target tracked: [[738,173],[1002,173],[738,466],[1002,466]]
+FRAME 277: Target tracked: [[749,176],[1008,176],[749,464],[1008,464]]
+FRAME 278: Target tracked: [[750,174],[1009,174],[750,462],[1009,462]]
+FRAME 279: Target tracked: [[755,177],[1014,177],[755,465],[1014,465]]
+FRAME 280: Target tracked: [[757,177],[1021,177],[757,470],[1021,470]]
+No more frames grabbed. Exiting...
+Total number of frames processed: 280
+Processing time: 29.6899s
+
+```

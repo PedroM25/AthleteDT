@@ -12,7 +12,7 @@ const float MEAN_SUBTRACTION_VAL = 127.5; // Result from doing 255/2
 const float SCALING_FACTOR = 0.00784; // Result from doing 2/255
 const float SECONDS_BETW_DETECTIONS = 3;
 
-const std::string APP_NAME = "PedroSwissTiming";
+const std::string APP_NAME = "PedroAthleteDT";
 const std::string WIN_NAME = "Output";
 const std::string PROTO_TXT_PATH = "model/MobileNet-SSDCaffe/MobileNetSSD_deploy.prototxt";
 const std::string CAFFE_MODEL_PATH = "model/MobileNet-SSDCaffe/MobileNetSSD_deploy.caffemodel";
