@@ -69,7 +69,7 @@ Executing,
 `PedroAthleteDT input_video/fencing1.mp4`
 
 Video produced:
-[output.mov](https://github.com/PedroM25/SwissTimingExercise/assets/40021588/69522110-55dc-4976-ba3a-715243a7e1fc)
+[output.webm](https://github.com/PedroM25/SwissTimingExercise/assets/40021588/60b10b54-04a5-4628-a427-87cf89c82bcb)
 
 
 Log produced:
