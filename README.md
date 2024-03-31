@@ -65,15 +65,15 @@ I would also explore other pretrained models and dedicate some time to understan
 
 ## Showcase
 
-Executing,
-`PedroAthleteDT input_video/fencing1.mp4`
+Executing the command `PedroAthleteDT input_video/fencing1.mp4` we get:
 
-Video produced:
+Output video:
 
 [output.webm](https://github.com/PedroM25/SwissTimingExercise/assets/40021588/60b10b54-04a5-4628-a427-87cf89c82bcb)
 
 
 Log produced:
+
 ```log
 Starting PedroAthleteDT execution.
 Successfully imported video. Video path: input_video/fencing1.mp4, FPS: 30, Resolution: 1280x720
