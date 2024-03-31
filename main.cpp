@@ -23,7 +23,7 @@ const std::vector<std::string> CLASS_NAMES{"background", "aeroplane", "bicycle",
 
 std::ofstream log_file;
 cv::VideoWriter output_video_writer;
-int frame_count = 0;                                  
+int frame_count = 0;
 
 std::string current_timestamp(){
     auto t = std::time(nullptr);
@@ -115,8 +115,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    // calculate delay for frame display in real-time
-    double fps = cap.get(cv::CAP_PROP_FPS); // Get the framerate of the video
+    double fps = cap.get(cv::CAP_PROP_FPS); // video framerate
     int delay = 1000 / fps; // Calculate delay based on the framerate
     int frame_width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
     int frame_height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
@@ -126,10 +125,9 @@ int main(int argc, char **argv)
         << ", Resolution: " << frame_width << "x" << frame_height
         << std::endl;
 
-    // video to output
+    // video output
     std::string video_file_name = "output_" + start_timestamp + ".avi";
     output_video_writer = cv::VideoWriter(video_file_name, cv::VideoWriter::fourcc('H','2','6','4'), fps, cv::Size(frame_width,frame_height));
-
     
     // pre trained network
     cv::dnn::Net net = cv::dnn::readNetFromCaffe(PROTO_TXT_PATH, CAFFE_MODEL_PATH);

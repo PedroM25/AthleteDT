@@ -46,3 +46,18 @@ Also, the following models seem to work with no hiccups:
 
 
 Ok I now realize that I just need to detect the athlete in the first frame and THEN apply a tracking algorithm to the rest of video, based on the box of the first detection
+
+
+## Sunday, 31st of March
+
+single biggest help getting the pretrained model to work:
+https://pyimagesearch.com/2017/09/11/object-detection-with-deep-learning-and-opencv/
+
+writing frames to video:
+https://learnopencv.com/read-write-and-display-a-video-using-opencv-cpp-python/
+
+great example that helped me understand how everything worked:
+https://github.com/opencv/opencv/blob/master/samples/dnn/object_detection.cpp
+
+great tutorial for the tracking and explanation of tracking and why you need it:
+https://learnopencv.com/object-tracking-using-opencv-cpp-python/
