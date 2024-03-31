@@ -68,7 +68,7 @@ Let's see the following example:
 `PedroAthleteDT test_video/fencing1.mp4`
 
 Video produced:
-[output.webm](output.webm)
+[output.avi](https://github.com/PedroM25/SwissTimingExercise/raw/8e9e38e55cde08d0e59fe8d651d2c06fa36dae6c/output_01-04-2024_00-20-21.avi)
 
 Log produced:
 ```json
