@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
-project(PedroAthleteDT)
+project(AthleteDT)
 
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
-add_executable(PedroAthleteDT main.cpp)
+add_executable(AthleteDT main.cpp)
 
-target_link_libraries( PedroAthleteDT ${OpenCV_LIBS} )
+target_link_libraries( AthleteDT ${OpenCV_LIBS} )

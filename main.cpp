@@ -12,7 +12,7 @@ const float MEAN_SUBTRACTION_VAL = 127.5; // Result from doing 255/2
 const float SCALING_FACTOR = 0.00784; // Result from doing 2/255
 const float SECONDS_BETW_DETECTIONS = 3;
 
-const std::string APP_NAME = "PedroAthleteDT";
+const std::string APP_NAME = "AthleteDT";
 const std::string WIN_NAME = "Output";
 const std::string PROTO_TXT_PATH = "model/MobileNet-SSDCaffe/MobileNetSSD_deploy.prototxt";
 const std::string CAFFE_MODEL_PATH = "model/MobileNet-SSDCaffe/MobileNetSSD_deploy.caffemodel";
@@ -119,9 +119,11 @@ int main(int argc, char **argv)
     int delay = 1000 / fps; // Calculate delay based on the framerate
     int frame_width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
     int frame_height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
+    int num_frames = cap.get(cv::CAP_PROP_FRAME_COUNT);
     log_file << "Successfully imported video. "
         << "Video path: " << argv[1] 
         << ", FPS: " << fps 
+        << ", Num frames: " << num_frames 
         << ", Resolution: " << frame_width << "x" << frame_height
         << std::endl;
 
