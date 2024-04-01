@@ -27,9 +27,9 @@ Due to time constraints, I decided to keep it simple and apply Deep Learning-bas
 
 I used the Caffe implementation of MobileNet SSD. 
 
-Tried to use .pb models from TensorFlow, available in [Kaggle](https://www.kaggle.com/models?task=16686&publisher=tensorflow) but I was unnsuccesful. I read a few things about having to "freeze" models, found a [page](https://docs.opencv.org/4.x/d1/d8f/tf_cls_tutorial_dnn_conversion.html) explaining how to achieve it but due to limited time, I decided to just use the most accessible one.
+Tried to use .pb models from TensorFlow, available in [Kaggle](https://www.kaggle.com/models?task=16686&publisher=tensorflow) but I was unnsuccesful. I read a few things about having to "freeze" models, found a [OpenCV doc page](https://docs.opencv.org/4.x/d1/d8f/tf_cls_tutorial_dnn_conversion.html) explaining how to achieve it but due to limited time, I decided to just use the most accessible one.
 
-I was also successful in importing some of the models provided in this ["opencv wiki page"](https://github.com/opencv/opencv/wiki/TensorFlow-Object-Detection-API)but had a hard time finding scaling factors and mean subtraction values associated with the models.
+I was also successful in importing some of the models provided in this ["opencv wiki page"](https://github.com/opencv/opencv/wiki/TensorFlow-Object-Detection-API) but had a hard time finding scaling factors and mean subtraction values associated with the models.
 
 
 ### Object detection - alternatives
