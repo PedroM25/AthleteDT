@@ -2,7 +2,6 @@ My attempt at the Swiss Timing coding challenge
 
 ## Summary
 This solution uses the OpenCV library 4.9.0, the MobileNet SSD Caffe pretrained model from [chuanqi305/MobileNet-SSD](https://github.com/chuanqi305/MobileNet-SSD) for object detection and the CSRT tracker provided in OpenCV framework for object tracking.
-In this case, we are detecting an athlete and tracking them after the initial detection.
 
 In my search I discovered several ways to perform object detection:
 * Histogram of gradients (HOG)
@@ -20,7 +19,7 @@ For object tracking there are also several algorithms provided by OpenCV out-of-
 
 Source: https://docs.opencv.org/4.9.0/d0/d0a/classcv_1_1Tracker.html
 
-For OpenCV I compiled from source as the libopencv-dev Ubuntu package was outdated (4.5.5 version).
+During setup, I had to compile OpenCV from source as the libopencv-dev Ubuntu package was outdated (4.5.5 version).
 
 ### Object detection
 
