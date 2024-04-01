@@ -59,7 +59,7 @@ I would also explore other tracking algorithms, other pretrained models for obje
 
 ## Showcase
 
-Executing the command `PedroAthleteDT input_video/fencing1.mp4` we get:
+Executing the command `AthleteDT input_video/fencing1.mp4` we get:
 
 Output video:
 
@@ -69,7 +69,7 @@ Output video:
 Log produced:
 
 ```log
-Starting PedroAthleteDT execution.
+Starting AthleteDT execution.
 Successfully imported video. Video path: input_video/fencing1.mp4, FPS: 30, Resolution: 1280x720
 FRAME 1: Person detected, confidence: 0.998385, coordinates: [[897,136],[1245,136],[897,523],[1245,523]]
 FRAME 1: Target tracked: [[898,137],[1246,137],[898,524],[1246,524]]

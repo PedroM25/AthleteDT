@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <filesystem>
 #include <opencv2/opencv.hpp>
 #include <opencv2/tracking.hpp>
 
@@ -97,10 +98,13 @@ int main(int argc, char **argv)
         std::cout << "Usage: " << APP_NAME << " <video path>" << std::endl;
         return 1;
     }
+
+    // create output/ folder
+    std::filesystem::create_directories("./output");
     
     // Create log file
     std::string start_timestamp = current_timestamp();
-    std::string log_file_name = APP_NAME + "_" + start_timestamp + ".log";
+    std::string log_file_name = "output/" + APP_NAME + "_" + start_timestamp + ".log";
     log_file= std::ofstream(log_file_name, std::ios::app);
     if (!log_file.is_open()) {
         std::cerr << "Error creating log file." << std::endl;
@@ -129,7 +133,7 @@ int main(int argc, char **argv)
         << std::endl;
 
     // video writer
-    std::string video_file_name = "output_" + start_timestamp + ".avi";
+    std::string video_file_name = "output/output_" + start_timestamp + ".avi";
     output_video_writer = cv::VideoWriter(video_file_name, cv::VideoWriter::fourcc('H','2','6','4'), fps, cv::Size(frame_width,frame_height));
     
     // pre trained network
