@@ -23,22 +23,16 @@ During setup, I had to compile OpenCV from source as the libopencv-dev Ubuntu pa
 
 ### Object detection
 
-Due to time constraints, I decided to keep it simple and apply Deep Learning-based object detection using a pretrained model.
+I decided to use a Deep Learning-based object detection method because it was the most reliable of all methods considered.
+Unlike HOG, which produced a lot of false-positives and was not accurate at all, the DL model was able to accurately detect a person in the first few frames of any of clips used.
 
-I used the Caffe implementation of MobileNet SSD. 
+Due to time constraints I used a pretrained model, the Caffe implementation of MobileNet SSD.
 
-Tried to use .pb models from TensorFlow, available in [Kaggle](https://www.kaggle.com/models?task=16686&publisher=tensorflow) but I was unnsuccesful. I read a few things about having to "freeze" models, found a [OpenCV doc page](https://docs.opencv.org/4.x/d1/d8f/tf_cls_tutorial_dnn_conversion.html) explaining how to achieve it but due to limited time, I decided to just use the most accessible one.
-
-I was also successful in importing some of the models provided in this ["opencv wiki page"](https://github.com/opencv/opencv/wiki/TensorFlow-Object-Detection-API) but had a hard time finding scaling factors and mean subtraction values associated with the models.
-
-
-### Object detection - alternatives
-I also implemented a HOG-based solution but found it to be too unreliable for person detection. Too many false-positives.
+Indeed, I was successful in importing other pretrained models from this ["opencv wiki page"](https://github.com/opencv/opencv/wiki/TensorFlow-Object-Detection-API) but had a hard time finding scaling factors and mean subtraction values associated with them. This made image preprocessing more difficult.
 
 ### Object tracking
 I used the CSRT tracking algorithm because it was the most reliable and easiest to apply, out of the box, without needing additional parameters.
-I tried to use DaSiamRPN but realized I needed to pass in some parameters and once again, due to time constraints, I just stuck with CSRT.
-
+I tried to use DaSiamRPN but realized I needed to pass in some additional parameters.
 
 ## Features requested
 The following are the features requested and the progress of implementation of each:
@@ -55,13 +49,13 @@ The following are the features requested and the progress of implementation of e
 
 
 ## Future work
-Since the clips are short, this solution works fine as it is but tracking of objects for long periods of time can lead to loss of tracking of the original object. To mitigate this, I would perform ocasional object detection and ensure that the program keeps tracking the desired object (the athlete).
+Since the clips are short, this solution works fine as it is but tracking for long periods of time can lead to loss of tracking of the original object. To mitigate this, I would perform ocasional object detection and ensure that the program keeps tracking the desired object (the athlete).
 
-I would also explore other pretrained models and dedicate some time to understand what is out there and the different approaches (SSD, Faster R-CNN, YOLO and others)
+I would also explore other tracking algorithms, other pretrained models for object detection and dedicate some time to understand what is out there and learning the math details behind the different approaches (SSD, Faster R-CNN, YOLO and others)
 
 ## Usage
 * Build using cmake
-* Execute PedroAthleteDT binary with relative path of video to be analyzed as argument
+* Execute PedroAthleteDT binary, passing "relative path of video to be analyzed" as argument
 
 ## Showcase
 
