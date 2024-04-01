@@ -37,6 +37,7 @@
 
 build/
 .vscode/
+model/
 *.Identifier
 *.log
 *.avi
