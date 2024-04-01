@@ -61,3 +61,13 @@ https://github.com/opencv/opencv/blob/master/samples/dnn/object_detection.cpp
 
 great tutorial for the tracking and explanation of tracking and why you need it:
 https://learnopencv.com/object-tracking-using-opencv-cpp-python/
+
+
+## Monday, 1st of April
+
+https://ftp.up.pt/kde-applicationdata/kdenlive/motion-tracker/DaSiamRPN/
+
+
+background removal for object detection:
+https://www.youtube.com/watch?v=O3b8lVF93jU
+
