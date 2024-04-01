@@ -127,7 +127,7 @@ int main(int argc, char **argv)
         << ", Resolution: " << frame_width << "x" << frame_height
         << std::endl;
 
-    // video output
+    // video writer
     std::string video_file_name = "output_" + start_timestamp + ".avi";
     output_video_writer = cv::VideoWriter(video_file_name, cv::VideoWriter::fourcc('H','2','6','4'), fps, cv::Size(frame_width,frame_height));
     
