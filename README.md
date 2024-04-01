@@ -37,7 +37,7 @@ I also implemented a HOG-based solution but found it to be too unreliable for pe
 
 ### Object tracking
 I used the CSRT tracking algorithm because it was the most reliable and easiest to apply, out of the box, without needing additional parameters.
-I tried to use DaSiamRPN but realized I needed to pass in some parameters and once again, due to time constraints, I just used this one.
+I tried to use DaSiamRPN but realized I needed to pass in some parameters and once again, due to time constraints, I just stuck with CSRT.
 
 
 ## Features requested
