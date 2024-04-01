@@ -109,6 +109,7 @@ int main(int argc, char **argv)
 
     log_file << "Starting " << APP_NAME << " execution." << std::endl;
 
+    // video capture
     cv::VideoCapture cap{argv[1]};
     if (!cap.isOpened()) {
         log_file << "Error opening video stream or file. Exiting." << std::endl;
