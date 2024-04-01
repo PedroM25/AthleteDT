@@ -39,6 +39,4 @@ build/
 .vscode/
 model/
 *.Identifier
-*.log
-*.avi
-*.webm
+output/
