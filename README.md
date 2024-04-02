@@ -1,90 +1,56 @@
 My attempt at the Swiss Timing coding challenge
 
-## Summary
-This solution uses the OpenCV library 4.9.0, the MobileNet SSD Caffe pretrained model from [chuanqi305/MobileNet-SSD](https://github.com/chuanqi305/MobileNet-SSD) for object detection and the CSRT tracker provided in OpenCV framework for object tracking.
+## Solution
 
-In my search I discovered several ways to perform object detection:
-* Histogram of gradients (HOG)
-* Haar Cascades
-* Deep Learning-based object detection using SSD, YOLO, Faster R-CNN
+This solution uses the MobileNet SSD Caffe pretrained model from [chuanqi305/MobileNet-SSD](https://github.com/chuanqi305/MobileNet-SSD) for object detection and the CSRT tracker provided in OpenCV framework for object tracking.
+* Confidence considered for object detection model: 0.6
+* Libraries used: OpenCV 4.9.0, built from source
 
-For object tracking there are also several algorithms provided by OpenCV out-of-the-box:
-* CSRT
-* DaSiamRPN
-* GOTURN
-* KCF
-* MIL
-* Nano
-* Vit
+This solution detects and tracks the first object the model classifies as "person", with a confidence above 0.6.
 
-Source: https://docs.opencv.org/4.9.0/d0/d0a/classcv_1_1Tracker.html
-
-During setup, I had to compile OpenCV from source as the libopencv-dev Ubuntu package was outdated (4.5.5 version).
-
-### Object detection
-
-I decided to use a Deep Learning-based object detection method because it was the most reliable of all methods considered.
-Unlike HOG, which produced a lot of false-positives and was not accurate at all, the DL model was able to accurately detect a person in the first few frames of any of clips used.
-
-Due to time constraints I used a pretrained model, the Caffe implementation of MobileNet SSD.
-
-Indeed, I was successful in importing other pretrained models from this ["opencv wiki page"](https://github.com/opencv/opencv/wiki/TensorFlow-Object-Detection-API) but had a hard time finding scaling factors and mean subtraction values associated with them. This made image preprocessing more difficult.
-
-### Object tracking
-I used the CSRT tracking algorithm because it was the most reliable and easiest to apply, out of the box, without needing additional parameters.
-I tried to use DaSiamRPN but realized I needed to pass in some additional parameters.
-
-## Features requested
-The following are the features requested and the progress of implementation of each:
-
-|Feature|Progress|Info|
-|---|---|---|
-|Choose a sports clip (3-10 seconds)|✅|Tried solution with three different sports clips depicting fencing, skiing, figure skating|
-|Load and process all images|✅|
-|Suitable representation of the tracking results shall be visible in the output |✅|Bounding box|
-|Further information can be extracted from the video and displayed (e.g. segmentation, skeleton recognition, ...)|❌|
-|Information should be available in text format|✅|.log file created after each run|
-|Visualized output should be available for playback after processing|✅|.avi file with H.264 codec exported after each run|
-|Display output during processing|✅|
-
-
-## Future work
-Since the clips are short, this solution works fine as it is but tracking for long periods of time can lead to loss of tracking of the original object. To mitigate this, I would perform ocasional object detection and ensure that the program keeps tracking the desired object (the athlete).
-
-I would also explore other tracking algorithms, other pretrained models for object detection and dedicate some time to understand what is out there and learning the math details behind the different approaches (SSD, Faster R-CNN, YOLO and others)
+Any other "person" detected is ignored.
 
 ## Usage
-* Build using cmake
-* Execute PedroAthleteDT binary, passing "relative path of video to be analyzed" as argument
 
-## Showcase
+AthleteDT <video path> [--visualize]
 
-Executing the command `AthleteDT input_video/fencing1.mp4` we get:
+The `--visualize` flag is boolean and if passed as an argument allows you to show the frame post-process live.
 
-Output video:
+## Example output
 
-[output.webm](https://github.com/PedroM25/SwissTimingExercise/assets/40021588/60b10b54-04a5-4628-a427-87cf89c82bcb)
+Command: 
 
+AthleteDT ../input_video/ice_skating2_4s.mp4
 
-Log produced:
+Video:
+
+here
+
+Log file:
 
 ```log
 Starting AthleteDT execution.
-Successfully imported video. Video path: input_video/fencing1.mp4, FPS: 30, Resolution: 1280x720
-FRAME 1: Person detected, confidence: 0.998385, coordinates: [[897,136],[1245,136],[897,523],[1245,523]]
-FRAME 1: Target tracked: [[898,137],[1246,137],[898,524],[1246,524]]
-FRAME 2: Target tracked: [[899,136],[1247,136],[899,523],[1247,523]]
-FRAME 3: Target tracked: [[911,135],[1259,135],[911,522],[1259,522]]
-FRAME 4: Target tracked: [[923,133],[1271,133],[923,520],[1271,520]]
+Successfully imported video "ice_skating2_4s.mp4", FPS: 25.1646, Num frames: 115, Resolution: 1920x1080
+FRAME 1: No person detected yet
+FRAME 2: No person detected yet
+FRAME 3: No person detected yet
+FRAME 4: No person detected yet
+FRAME 5: No person detected yet
+FRAME 6: Person detected, confidence: 0.954797, coordinates: [[1058,337],[1451,337],[1058,922],[1451,922]]
+FRAME 6: Target tracked: [[1058,337],[1451,337],[1058,922],[1451,922]]
+FRAME 7: Target tracked: [[1049,336],[1450,336],[1049,933],[1450,933]]
+FRAME 8: Target tracked: [[1033,320],[1467,320],[1033,966],[1467,966]]
+FRAME 9: Target tracked: [[1028,311],[1479,311],[1028,983],[1479,983]]
+FRAME 10: Target tracked: [[1023,336],[1474,336],[1023,1008],[1474,1008]]
+FRAME 11: Target tracked: [[1008,324],[1487,324],[1008,1037],[1487,1037]]
+FRAME 12: Target tracked: [[1013,350],[1473,350],[1013,1035],[1473,1035]]
 ... snip ...
-FRAME 275: Target tracked: [[730,175],[994,175],[730,468],[994,468]]
-FRAME 276: Target tracked: [[738,173],[1002,173],[738,466],[1002,466]]
-FRAME 277: Target tracked: [[749,176],[1008,176],[749,464],[1008,464]]
-FRAME 278: Target tracked: [[750,174],[1009,174],[750,462],[1009,462]]
-FRAME 279: Target tracked: [[755,177],[1014,177],[755,465],[1014,465]]
-FRAME 280: Target tracked: [[757,177],[1021,177],[757,470],[1021,470]]
+FRAME 112: Target tracked: [[602,219],[1019,219],[602,840],[1019,840]]
+FRAME 113: Target tracked: [[605,229],[1014,229],[605,838],[1014,838]]
+FRAME 114: Target tracked: [[616,246],[1009,246],[616,831],[1009,831]]
+FRAME 115: Target tracked: [[625,254],[1010,254],[625,828],[1010,828]]
 No more frames grabbed. Exiting...
-Total number of frames processed: 280
-Processing time: 29.6899s
+Total number of frames processed: 115
+Processing time: 22.0788s
 
 ```
