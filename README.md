@@ -5,6 +5,7 @@ My attempt at the Swiss Timing coding challenge
 This solution uses the MobileNet SSD Caffe pretrained model from [chuanqi305/MobileNet-SSD](https://github.com/chuanqi305/MobileNet-SSD) for object detection and the CSRT tracker provided in OpenCV framework for object tracking.
 * Confidence considered for object detection model: 0.6
 * Libraries used: OpenCV 4.9.0, built from source
+* Output stored in a `output/` under same folder as bin
 
 This solution detects and tracks the first object the model classifies as "person", with a confidence above 0.6.
 
@@ -18,15 +19,14 @@ The `--visualize` flag is boolean and if passed as an argument allows you to sho
 
 ## Example output
 
-Command: 
+**Command:**
 
 AthleteDT ../input_video/ice_skating2_4s.mp4
 
-Video:
+**Video:**
 
-here
 
-Log file:
+**Log file:**
 
 ```log
 Starting AthleteDT execution.
