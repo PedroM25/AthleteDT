@@ -11,7 +11,7 @@ namespace fs = std::filesystem;
 const int IN_W = 300;
 const int IN_H = 300;
 
-const float CONF_TRSH = 0.5;
+const float CONF_TRSH = 0.6;
 const float MEAN_SUBTRACTION_VAL = 127.5; // Result from doing 255/2
 const float SCALING_FACTOR = 0.00784; // Result from doing 2/255
 const float SECONDS_BETW_DETECTIONS = 3;
@@ -26,19 +26,11 @@ const cv::Scalar COLOR{0,255,0};
 
 std::vector<std::string> class_names{};
 std::ofstream log_file;
-cv::VideoWriter output_video_writer;
 int frame_count = 0;
 
-std::string get_video_file_name(std::string path){
-    auto t = std::time(nullptr);
-    auto tm = *std::localtime(&t);
-
-    std::ostringstream oss;
-    oss << std::put_time(&tm, "%d-%m-%Y_%H-%M-%S");
-    return oss.str();
-}
-
-// Read from file supported objects that model can identify
+/*
+ * Read from file supported objects that model can identify
+ */
 bool readClassNames(){
     std::ifstream file(CLASS_NAMES_PATH);
     
@@ -137,7 +129,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    double fps = cap.get(cv::CAP_PROP_FPS); // video framerate
+    double fps = cap.get(cv::CAP_PROP_FPS);
     int frame_width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
     int frame_height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
     int num_frames = cap.get(cv::CAP_PROP_FRAME_COUNT);
@@ -149,7 +141,7 @@ int main(int argc, char **argv)
 
     // video writer
     std::string output_file_name = "output/output_" + video_file_name + ".mp4";
-    output_video_writer = cv::VideoWriter(output_file_name, cv::VideoWriter::fourcc('m','p','4','v'), fps, cv::Size(frame_width,frame_height));
+    cv::VideoWriter output_video_writer = cv::VideoWriter(output_file_name, cv::VideoWriter::fourcc('m','p','4','v'), fps, cv::Size(frame_width,frame_height));
     
     // pre trained network
     cv::dnn::Net net = cv::dnn::readNetFromCaffe(PROTO_TXT_PATH, CAFFE_MODEL_PATH);
