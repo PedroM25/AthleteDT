@@ -5,10 +5,12 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/tracking.hpp>
 
+namespace fs = std::filesystem;
+
 const int IN_W = 300;
 const int IN_H = 300;
 
-const float CONF_TRSH = 0.9;
+const float CONF_TRSH = 0.5;
 const float MEAN_SUBTRACTION_VAL = 127.5; // Result from doing 255/2
 const float SCALING_FACTOR = 0.00784; // Result from doing 2/255
 const float SECONDS_BETW_DETECTIONS = 3;
@@ -17,22 +19,39 @@ const std::string APP_NAME = "AthleteDT";
 const std::string WIN_NAME = "Output";
 const std::string PROTO_TXT_PATH = "model/MobileNet-SSDCaffe/MobileNetSSD_deploy.prototxt";
 const std::string CAFFE_MODEL_PATH = "model/MobileNet-SSDCaffe/MobileNetSSD_deploy.caffemodel";
-const std::vector<std::string> CLASS_NAMES{"background", "aeroplane", "bicycle", "bird", "boat", "bottle",
-                                            "bus", "car", "cat", "chair", "cow", "diningtable",
-                                            "dog", "horse", "motorbike", "person", "pottedplant", "sheep",
-                                            "sofa", "train", "tvmonitor"};
+const std::string CLASS_NAMES_PATH = "model/MobileNet-SSDCaffe/object_detection_classes_voc0712.txt";
 
+const cv::Scalar COLOR{0,255,0};
+
+std::vector<std::string> class_names{};
 std::ofstream log_file;
 cv::VideoWriter output_video_writer;
 int frame_count = 0;
 
-std::string current_timestamp(){
+std::string get_video_file_name(std::string path){
     auto t = std::time(nullptr);
     auto tm = *std::localtime(&t);
 
     std::ostringstream oss;
     oss << std::put_time(&tm, "%d-%m-%Y_%H-%M-%S");
     return oss.str();
+}
+
+// Read from file supported objects that model can identify
+bool readClassNames(){
+    std::ifstream file(CLASS_NAMES_PATH);
+    
+    if (file.is_open()) {
+        std::string line;
+        while (std::getline(file, line)) {
+            class_names.push_back(line);
+        }
+        file.close();
+    } else {
+        std::cerr << "Unable to open file" << std::endl;
+        return false;
+    }
+    return true;
 }
 
 /*
@@ -49,10 +68,9 @@ bool person_detected(cv::dnn::Net& net, const cv::Mat& frame, cv::Ptr<cv::Tracke
         float confidence = detectionMat.at<float>(i, 2);
         int class_id = detectionMat.at<float>(i, 1);
 
-        std::string label = CLASS_NAMES[class_id] + " : " + std::to_string(confidence);
-        std::cout << "[DEBUG] "<< "Detected " << label << std::endl;
+        std::string label = class_names[class_id] + " : " + std::to_string(confidence);
 
-        if (CLASS_NAMES[class_id] == "person" && confidence > CONF_TRSH){
+        if (class_names[class_id] == "person" && confidence > CONF_TRSH){
             success = true;
 
             // Object location
@@ -72,19 +90,8 @@ bool person_detected(cv::dnn::Net& net, const cv::Mat& frame, cv::Ptr<cv::Tracke
             cv::Point leftTopCoords{xLeftTop, yLeftTop};
             cv::Point rightBottomCoords{xRightBottom, yRightBottom};
             cv::Rect rec{leftTopCoords, rightBottomCoords};
-            // draw rectangle
-            cv::rectangle(frame, rec, cv::Scalar(0, 255, 0), 2);
             
-            // init tracker
             tracker->init(frame, rec);
-
-            // Draw label and confidence of prediction in frame
-            cv::putText(frame, label, cv::Point(xLeftTop, yLeftTop - 15),
-                        cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 255, 0),1.5);
-            
-            output_video_writer.write(frame);
-            cv::imshow(WIN_NAME, frame);
-            cv::waitKey(1600);
             break; //first one detected, others ignored
         }
     }
@@ -93,21 +100,30 @@ bool person_detected(cv::dnn::Net& net, const cv::Mat& frame, cv::Ptr<cv::Tracke
 
 int main(int argc, char **argv)
 {
-    int64_t start = cv::getTickCount();
-    if (argc != 2) {
-        std::cout << "Usage: " << APP_NAME << " <video path>" << std::endl;
+    if (argc == 1) {
+        std::cerr << "No arguments passed. Usage: " << APP_NAME << " <video path> [--visualize]" << std::endl;
         return 1;
     }
 
+    // check if should show live processing of frames
+    bool showProcessing = false;
+    if (argc == 3 && std::string(argv[2]) == "--visualize"){
+        showProcessing = true;
+    }
+
+    if (!readClassNames()){
+        return 1;
+    };
+
     // create output/ folder
-    std::filesystem::create_directories("./output");
+    fs::create_directories("./output");
     
     // Create log file
-    std::string start_timestamp = current_timestamp();
-    std::string log_file_name = "output/" + APP_NAME + "_" + start_timestamp + ".log";
-    log_file= std::ofstream(log_file_name, std::ios::app);
+    std::string video_file_name = fs::path(argv[1]).stem();
+    std::string log_file_name = "output/" + APP_NAME + "_" + video_file_name + ".log";
+    log_file= std::ofstream(log_file_name, std::ios::trunc);
     if (!log_file.is_open()) {
-        std::cerr << "Error creating log file." << std::endl;
+        std::cerr << "Error creating log file. Exiting." << std::endl;
         return 1;
     }
 
@@ -121,20 +137,18 @@ int main(int argc, char **argv)
     }
 
     double fps = cap.get(cv::CAP_PROP_FPS); // video framerate
-    int delay = 1000 / fps; // Calculate delay based on the framerate
     int frame_width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
     int frame_height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
     int num_frames = cap.get(cv::CAP_PROP_FRAME_COUNT);
-    log_file << "Successfully imported video. "
-        << "Video path: " << argv[1] 
+    log_file << "Successfully imported video " << fs::path(argv[1]).filename()
         << ", FPS: " << fps 
         << ", Num frames: " << num_frames 
         << ", Resolution: " << frame_width << "x" << frame_height
         << std::endl;
 
     // video writer
-    std::string video_file_name = "output/output_" + start_timestamp + ".avi";
-    output_video_writer = cv::VideoWriter(video_file_name, cv::VideoWriter::fourcc('H','2','6','4'), fps, cv::Size(frame_width,frame_height));
+    std::string output_file_name = "output/output_" + video_file_name + ".mp4";
+    output_video_writer = cv::VideoWriter(output_file_name, cv::VideoWriter::fourcc('m','p','4','v'), fps, cv::Size(frame_width,frame_height));
     
     // pre trained network
     cv::dnn::Net net = cv::dnn::readNetFromCaffe(PROTO_TXT_PATH, CAFFE_MODEL_PATH);
@@ -142,13 +156,15 @@ int main(int argc, char **argv)
     // tracker
     cv::Ptr<cv::Tracker> tracker = cv::TrackerCSRT::create();
 
+    int delay = 1000 / fps; // Calculate delay based on the framerate
     bool person_detected_first_time = false;
+    int64_t start = cv::getTickCount();
+    std::cout << "Video processing has started..." << std::endl;
     cv::Mat frame{};
     while (cap.read(frame)){
         frame_count++;
         
         // 1. Detect a person 
-        // If model detects more than one person, first detected will be considered
         if (!person_detected_first_time){
             person_detected_first_time = person_detected(net, frame, tracker);
             if(!person_detected_first_time){
@@ -163,7 +179,10 @@ int main(int argc, char **argv)
             bool tracker_update_ok = tracker->update(frame, rec);
             if (tracker_update_ok){
                 // draw rectangle
-                cv::rectangle(frame, rec, cv::Scalar(0, 255, 0), 2);
+                cv::rectangle(frame, rec, COLOR, 2);
+                cv::putText(frame, "tracker: CSRT", cv::Point(rec.x, rec.y - 15),
+                        cv::FONT_HERSHEY_SIMPLEX, 0.5, COLOR, 1.5);
+
                 log_file << "FRAME " << frame_count << ": " << "Target tracked: [" 
                     << "["<<rec.x<<","<<rec.y<<"],"
                     << "["<<rec.x+rec.width<<","<<rec.y<<"],"
@@ -177,12 +196,16 @@ int main(int argc, char **argv)
         }
 
         output_video_writer.write(frame);
-        cv::imshow(WIN_NAME, frame);
+        if(showProcessing){
+            cv::imshow(WIN_NAME, frame);
+        }
 
         if (cv::waitKey(delay) == 27) { //ESC key
             break;
         }
     }
+
+    std::cout << "Processing finished. Check output folder" << std::endl;
 
     log_file << "No more frames grabbed. Exiting..." << std::endl;
     log_file << "Total number of frames processed: " << frame_count << std::endl;
