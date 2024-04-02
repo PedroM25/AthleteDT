@@ -21,10 +21,11 @@ The `--visualize` flag is boolean and if passed as an argument allows you to sho
 
 **Command:**
 
-AthleteDT ../input_video/ice_skating2_4s.mp4
+`AthleteDT ../input_video/ice_skating2_4s.mp4`
 
 **Video:**
 
+[ice_skating2_4s.mp4](https://github.com/PedroM25/AthleteDT/assets/40021588/bd3fd4fb-c534-47c4-aef1-e83626e833d1)
 
 **Log file:**
 
