@@ -4,14 +4,14 @@ My attempt at the Swiss Timing coding challenge
 
 This solution supports both the detection and tracking of a person and its segmentation (seperate functionalities).
 
-## Solution 1: Detection and tracking
+## Method 1: Detection and tracking
 
-Uses the MobileNet SSD Caffe pretrained model from [chuanqi305/MobileNet-SSD](https://github.com/chuanqi305/MobileNet-SSD) for object detection and the CSRT tracker provided in OpenCV framework for object tracking.
+This method uses the MobileNet SSD Caffe pretrained model from [chuanqi305/MobileNet-SSD](https://github.com/chuanqi305/MobileNet-SSD) for object detection and the CSRT tracker provided in OpenCV framework for object tracking.
 * Confidence considered for object detection model: 0.6
 * Libraries used: OpenCV 4.10.0, built from source
 * Output stored in a `output/` under same folder as bin
 
-This solution detects and tracks the first object the model classifies as "person", with a confidence above 0.6.
+Detects and tracks the first object the model classifies as "person", with a confidence above 0.6.
 
 Any other "person" detected is ignored.
 
@@ -25,16 +25,16 @@ The `--visualize` flag is boolean and if passed as an argument allows you to sho
 
 **Command:**
 
-`AthleteDT input_video/ice_skating2_4s.mp4`
+`AthleteDT tracking input_video/ice_skating2_4s.mp4`
 
 **Video:**
 
-[output_ice_skating2_4s.webm](https://github.com/PedroM25/AthleteDT/assets/40021588/367b95a8-2f89-4e1f-aaf9-3631b2eeb96d)
+[output_ice_skating2_4s_tracking.webm](https://github.com/PedroM25/AthleteDT/assets/40021588/367b95a8-2f89-4e1f-aaf9-3631b2eeb96d)
 
 **Log file:**
 
 ```log
-Starting AthleteDT execution.
+Starting AthleteDT execution with method 'tracking'.
 Successfully imported video "ice_skating2_4s.mp4", FPS: 25.1646, Num frames: 115, Resolution: 1920x1080
 FRAME 1: No person detected yet
 FRAME 2: No person detected yet
@@ -61,17 +61,17 @@ Processing time: 21.9272s
 
 **Command:**
 
-`AthleteDT input_video/skate1_4s.mp4`
+`AthleteDT tracking input_video/skate1_4s.mp4`
 
 **Video:**
 
-[output_skate1_4s.webm](https://github.com/PedroM25/AthleteDT/assets/40021588/bb5c66d3-9282-4514-a649-d9480cc4c8b2)
+[output_skate1_4s_tracking.webm](https://github.com/PedroM25/AthleteDT/assets/40021588/bb5c66d3-9282-4514-a649-d9480cc4c8b2)
 
 
 **Log file:**
 
 ```log
-Starting AthleteDT execution.
+Starting AthleteDT execution with method 'tracking'.
 Successfully imported video "skate1_4s.mp4", FPS: 25.1751, Num frames: 117, Resolution: 1280x720
 FRAME 1: Person detected, confidence: 0.876715, coordinates: [[458,143],[789,143],[458,461],[789,461]]
 FRAME 1: Target tracked: [[458,143],[789,143],[458,461],[789,461]]
@@ -90,14 +90,14 @@ Total number of frames processed: 117
 Processing time: 11.554s
 ```
 
-## Solution 2: Instance segmentation
+## Method 2: Instance segmentation
 
-Uuses the Mask-RCNN pre-trained model from TensorFlow for object detection. Downloaded from [TensorFlow](http://download.tensorflow.org/models/object_detection/mask_rcnn_inception_v2_coco_2018_01_28.tar.gz) and the repo for the implementation of Mask-RCNN can be seen [here](https://github.com/matterport/Mask_RCNN)
+This method uses the Mask-RCNN pre-trained model from TensorFlow for object detection. Downloaded from [TensorFlow](http://download.tensorflow.org/models/object_detection/mask_rcnn_inception_v2_coco_2018_01_28.tar.gz) and the repo for the implementation of Mask-RCNN can be seen [here](https://github.com/matterport/Mask_RCNN)
 * Confidence considered for object detection model: 0.8
 * Libraries used: OpenCV 4.10.0, built from source
 * Output stored in a `output/` under same folder as bin
 
-This solution performs object detection in every frame. Only the first object classified by the model as a "person", with a confidence above 0.8 is considered.
+Performs object detection in every frame. Only the first object classified by the model as a "person", with a confidence above 0.8 is considered.
 
 Any other "person" detected is ignored.
 
@@ -111,16 +111,16 @@ The `--visualize` flag is boolean and if passed as an argument allows you to sho
 
 **Command:**
 
-`AthleteDT-seg input_video/ice_skating2_4s.mp4`
+`AthleteDT segmentation input_video/ice_skating2_4s.mp4`
 
 **Video:**
 
-[output_ice_skating2_4s.webm](https://github.com/PedroM25/AthleteDT-segmentation/assets/40021588/96b36d1d-8ce9-4224-9dba-40e1cb2560b3)
+[output_ice_skating2_4s_segmentation.webm](https://github.com/PedroM25/AthleteDT-segmentation/assets/40021588/96b36d1d-8ce9-4224-9dba-40e1cb2560b3)
 
 **Log file:**
 
 ```log
-Starting AthleteDT-seg execution.
+Starting AthleteDT execution with method 'segmentation'.
 Successfully imported video "ice_skating2_4s.mp4", FPS: 25.1646, Num frames: 115, Resolution: 1920x1080
 FRAME 1: Person detected, confidence: 0.995384, coordinates: [[1119,371],[1520,371],[1119,946],[1520,946]]
 FRAME 2: Person detected, confidence: 0.988087, coordinates: [[1117,360],[1515,360],[1117,925],[1515,925]]
@@ -144,16 +144,16 @@ Processing time: 246.602s
 
 **Command:**
 
-`AthleteDT-seg input_video/skate1_4s.mp4`
+`AthleteDT segmentation input_video/skate1_4s.mp4`
 
 **Video:**
 
-[output_skate1_4s.webm](https://github.com/PedroM25/AthleteDT-segmentation/assets/40021588/94aef04e-30cf-4463-a8cb-fb05b8a2c393)
+[output_skate1_4s_segmentation.webm](https://github.com/PedroM25/AthleteDT-segmentation/assets/40021588/94aef04e-30cf-4463-a8cb-fb05b8a2c393)
 
 **Log file:**
 
 ```log
-Starting AthleteDT-seg execution.
+Starting AthleteDT execution with method 'segmentation'.
 Successfully imported video "skate1_4s.mp4", FPS: 25.1751, Num frames: 117, Resolution: 1280x720
 FRAME 1: Person detected, confidence: 0.997617, coordinates: [[469,150],[765,150],[469,426],[765,426]]
 FRAME 2: Person detected, confidence: 0.998832, coordinates: [[481,152],[778,152],[481,430],[778,430]]
