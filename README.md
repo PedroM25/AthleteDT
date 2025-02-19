@@ -148,7 +148,7 @@ Processing time: 246.602s
 
 **Video:**
 
-[output_skate1_4s_segmentation.webm](https://github.com/PedroM25/AthleteDT-segmentation/assets/40021588/94aef04e-30cf-4463-a8cb-fb05b8a2c393)
+[output_skate1_4s_segmentation.webm](https://github.com/user-attachments/assets/df1cd88c-c5d6-439a-9e36-b1d726bec556)
 
 **Log file:**
 
