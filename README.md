@@ -115,7 +115,7 @@ The `--visualize` flag is boolean and if passed as an argument allows you to sho
 
 **Video:**
 
-[output_ice_skating2_4s_segmentation.webm](https://github.com/PedroM25/AthleteDT-segmentation/assets/40021588/96b36d1d-8ce9-4224-9dba-40e1cb2560b3)
+[output3.webm](https://github.com/user-attachments/assets/145bfa0d-685b-4fdc-ad7c-11f7b722b3c9)
 
 **Log file:**
 
@@ -148,7 +148,7 @@ Processing time: 246.602s
 
 **Video:**
 
-[output_skate1_4s_segmentation.webm](https://github.com/user-attachments/assets/df1cd88c-c5d6-439a-9e36-b1d726bec556)
+[output4.webm](https://github.com/user-attachments/assets/ad329a25-a74e-47b5-88dd-ee97098bae54)
 
 **Log file:**
 
